@@ -18,6 +18,9 @@ public class Message {
     private static int sPoolSize = 0;
     static final int FLAG_IN_USE = 1 << 0;
     Runnable callback;
+    private static final int MAX_POOL_SIZE = 50;
+
+    private static boolean gCheckRecycle = true;
 
     public Message() {
     }
@@ -51,6 +54,38 @@ public class Message {
 
     /*package*/ void markInUse() {
         flags |= FLAG_IN_USE;
+    }
+
+    public void recycle() {
+        if (isInUse()) {
+            if (gCheckRecycle) {
+                throw new IllegalStateException("This message cannot be recycled because it "
+                        + "is still in use.");
+            }
+            return;
+        }
+        recycleUnchecked();
+    }
+
+    void recycleUnchecked() {
+        // Mark the message as in use while it remains in the recycled object pool.
+        // Clear out all other details.
+        flags = FLAG_IN_USE;
+        what = 0;
+        arg1 = 0;
+        arg2 = 0;
+        obj = null;
+        when = 0;
+        target = null;
+        callback = null;
+
+        synchronized (sPoolSync) {
+            if (sPoolSize < MAX_POOL_SIZE) {
+                next = sPool;
+                sPool = this;
+                sPoolSize++;
+            }
+        }
     }
 
     @Override

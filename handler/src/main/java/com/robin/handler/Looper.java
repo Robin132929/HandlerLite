@@ -36,4 +36,13 @@ public class Looper {
         }
 
     }
+
+    public void quit() {
+        mQueue.quit(false);
+    }
+
+    public void quitSafely() {
+        mQueue.quit(true);
+    }
+
 }

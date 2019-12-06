@@ -20,7 +20,7 @@ public class MessageQueue {
                 Message prevMsg = null;
                 Message msg = mMessages;
                 if (msg != null && msg.target == null) {
-                    Log.i(TAG, "next: "+msg.target);
+                    Log.i(TAG, "next: " + msg.target);
                     do {
                         prevMsg = msg;
                         msg = msg.next;
@@ -32,7 +32,7 @@ public class MessageQueue {
                     } else {
 
                         if (prevMsg != null) {
-                            Log.i(TAG, "next pre: "+prevMsg.toString());
+                            Log.i(TAG, "next pre: " + prevMsg.toString());
                             prevMsg.next = msg.next;
                         } else {
                             mMessages = msg.next;
@@ -82,9 +82,6 @@ public class MessageQueue {
     }
 
     void quit(boolean safe) {
-//        if (!mQuitAllowed) {
-//            throw new IllegalStateException("Main thread not allowed to quit.");
-//        }
 
         synchronized (this) {
 
@@ -103,8 +100,8 @@ public class MessageQueue {
             if (p.when > now) {
                 removeAllMessagesLocked();
             } else {
-               Message n;
-                for (;;) {
+                Message n;
+                for (; ; ) {
                     n = p.next;
                     if (n == null) {
                         return;

@@ -13,8 +13,6 @@ public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
 
-        assertEquals(4, 2 + 2);
-
         Looper.prepare();
         final HandlerLite handlerLite=new HandlerLite(){
             @Override

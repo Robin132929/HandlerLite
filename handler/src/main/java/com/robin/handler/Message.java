@@ -7,8 +7,6 @@ public class Message {
     public int arg2;
     public Object obj;
 
-    //
-
     public long when;
     public int flags;
     HandlerLite target;

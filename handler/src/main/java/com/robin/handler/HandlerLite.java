@@ -97,7 +97,7 @@ public class HandlerLite {
     }
 
     /**
-     * handler 必须重写的方法
+     * handleMessage
      *
      * @param msg
      */
@@ -122,9 +122,6 @@ public class HandlerLite {
         return "0x" + Integer.toHexString(message.what);
     }
 
-    /**
-     * handler 回调
-     */
     public interface Callback {
         public boolean handleMessage(Message msg);
     }
